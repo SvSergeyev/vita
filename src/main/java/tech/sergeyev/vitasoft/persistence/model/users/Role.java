@@ -1,6 +1,7 @@
-package persistence.model.users;
+package tech.sergeyev.vitasoft.persistence.model.users;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
@@ -17,7 +19,10 @@ public class Role {
 
     String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
     Collection<Person> users;
 
+    public Role(String name) {
+        this.name = name;
+    }
 }

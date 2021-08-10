@@ -1,4 +1,4 @@
-package tech.sergeyev.vitasofttesttask;
+package tech.sergeyev.vitasoft;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
