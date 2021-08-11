@@ -27,6 +27,7 @@ import java.util.List;
 @Transactional
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PersonService implements UserDetailsService {
+
     final PersonRepository personRepository;
     static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
 
@@ -37,10 +38,11 @@ public class PersonService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person user = personRepository.findByEmail(username);
+        LOGGER.info("\nFind this username: " + username);
         if (user != null) {
             LOGGER.info("Find this user: " + user);
             return new User(
-                    user.getName(),
+                    user.getEmail(),
                     user.getPassword(),
                     true,
                     true,
@@ -60,4 +62,11 @@ public class PersonService implements UserDetailsService {
         return authorities;
     }
 
+    public Person getPersonById(int id) {
+        return personRepository.findById(id);
+    }
+
+    public Person getPersonByEmail(String email) {
+        return personRepository.findByEmail(email);
+    }
 }

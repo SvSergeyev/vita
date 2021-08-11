@@ -1,15 +1,40 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:tiles="http://www.thymeleaf.org"
-      lang="en">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>Личный кабинет</title>
+    <title>Главная страница</title>
 </head>
 <body>
-<a>Добавить заявку</a>
+    <a th:href="@{/lk/{id}(id=${person.getId()})}" sec:authentication="name">name</a>
+    <a> | </a>
+    <a th:href="@{/logout}" th:method="post">Выход</a>
 <hr/>
-<a>Выход</a>
+<p>
+    Тут по ролям делится текст
+    Если ты:
+        пользователь:
+            создавать заявки
+            просматривать созданные им заявки
+            редактировать созданные им заявки в статусе «черновик»
+            отправлять заявки на рассмотрение оператору.
+            ----
+            кнопки "создать заявку", "мои заявки"
+
+        оператор:
+            Просматривать отправленные на рассмотрение заявки
+            Принимать заявки
+            Отклонять заявки
+            ----
+            кнопки "просмотреть новые заявки"
+
+        админ
+            смотреть список пользователей
+            назначать пользователям права оператора
+            ----
+            кнопки "пользователи", "назначить оператора"
+</p>
 </body>
 </html>
