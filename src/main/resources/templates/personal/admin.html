@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin account</title>
+</head>
+<body>
+<h3>Personal account</h3>
+<a sec:authentication="name">VALUE</a>
+<a> | </a>
+<a th:href="@{/logout}" th:method="post">Выход</a>
+<hr />
+смотреть список пользователей <br />
+назначать пользователям права оператора <br />
+<table>
+    <tr>
+        <th>NAME</th>
+        <th>EMAIL</th>
+    </tr>
+    <tr>
+        <td>
+            <div th:each="person:${people}">
+                <div th:if="${#authorization.expr('hasRole(''ROLE_USER'')')}">
+                    <a th:text="${person.getName()}">VALUE</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div th:each="person:${people}">
+                <div th:if="${#authorization.expr('hasRole(''ROLE_USER'')')}">
+                    <a th:text="${person.getEmail()}">VALUE</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<br/>
+<br/>
+<br/>
+
+<hr/>
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getId()})}"
+       th:text="${person.getName() + ', '}">user</a>
+</div>
+</body>
+</html>

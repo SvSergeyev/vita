@@ -6,6 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 
+import java.util.List;
+
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer> {
     @Query("SELECT p FROM Person p WHERE p.email = :email")
@@ -13,4 +15,7 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     @Query("SELECT p FROM Person p WHERE p.id = :id")
     Person findById(@Param("id") int id);
+
+    @Query("SELECT p FROM Person p WHERE p.roles = :role")
+    List<Person> findAllByRoles(String role);
 }

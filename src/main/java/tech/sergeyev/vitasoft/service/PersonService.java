@@ -69,4 +69,13 @@ public class PersonService implements UserDetailsService {
     public Person getPersonByEmail(String email) {
         return personRepository.findByEmail(email);
     }
+
+    public List<Person> getAllPeople() {
+        List<Person> list = personRepository.findAll();
+        for (Person person : list) {
+            LOGGER.info("\nROLE: " + person.getRoles() + "\n");
+        }
+        return personRepository.findAll();
+    }
+
 }
