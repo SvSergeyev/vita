@@ -23,7 +23,6 @@ public class MainController {
 
     @GetMapping()
     public String index(Model model) {
-        LOGGER.info("\n\n\nInside @GetMapping()");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.getPersonByEmail(personService.loadUserByUsername(auth.getName()).getUsername());
         model.addAttribute("person", user);

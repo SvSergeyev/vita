@@ -10,17 +10,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.sergeyev.vitasoft.persistence.dao.PersonRepository;
-import tech.sergeyev.vitasoft.persistence.dao.RoleRepository;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 import tech.sergeyev.vitasoft.persistence.model.users.Role;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -38,9 +35,9 @@ public class PersonService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person user = personRepository.findByEmail(username);
-        LOGGER.info("\nFind this username: " + username);
+//        LOGGER.info("Find this username: " + username);
         if (user != null) {
-            LOGGER.info("Find this user: " + user);
+//            LOGGER.info("Find this user: " + user);
             return new User(
                     user.getEmail(),
                     user.getPassword(),
@@ -70,12 +67,18 @@ public class PersonService implements UserDetailsService {
         return personRepository.findByEmail(email);
     }
 
-    public List<Person> getAllPeople() {
-        List<Person> list = personRepository.findAll();
-        for (Person person : list) {
-            LOGGER.info("\nROLE: " + person.getRoles() + "\n");
-        }
-        return personRepository.findAll();
+    public List<Person> getAllPeopleByRole(String name) {
+        List<Person> list = personRepository.findAllByRoles(name);
+        LOGGER.info("\n\n\nROLES: (name=" + name + ") : " + list);
+        return personRepository.findAllByRoles(name);
+    }
+
+    public void update(int id, Person person) {
+        Person toBeUpdated = personRepository.findById(id);
+        toBeUpdated.getRoles().clear();
+        LOGGER.info("Roles of toBeUpdated person: " + toBeUpdated.getRoles());
+        toBeUpdated.setRoles(person.getRoles());
+        LOGGER.info("Roles of toBeUpdated person: " + toBeUpdated.getRoles());
     }
 
 }

@@ -8,14 +8,13 @@
     <title>Admin account</title>
 </head>
 <body>
-<h3>Personal account</h3>
+<h3>Administrator's personal account</h3>
 <a sec:authentication="name">VALUE</a>
 <a> | </a>
 <a th:href="@{/logout}" th:method="post">Выход</a>
 <hr />
-смотреть список пользователей <br />
-назначать пользователям права оператора <br />
-<table>
+
+<table border="0">
     <tr>
         <th>NAME</th>
         <th>EMAIL</th>
@@ -23,29 +22,27 @@
     <tr>
         <td>
             <div th:each="person:${people}">
-                <div th:if="${#authorization.expr('hasRole(''ROLE_USER'')')}">
-                    <a th:text="${person.getName()}">VALUE</a>
-                </div>
+                <a th:text="${person.getName()}">VALUE</a>
             </div>
         </td>
         <td>
             <div th:each="person:${people}">
-                <div th:if="${#authorization.expr('hasRole(''ROLE_USER'')')}">
-                    <a th:text="${person.getEmail()}">VALUE</a>
-                </div>
+                <a th:text="${person.getEmail()}">VALUE</a>
+            </div>
+        </td>
+        <td>
+            <div th:each="person:${people}">
+                <form th:method="PATCH"
+                      th:action="@{/lk/admin/editUserRoles/{id}(id=${person.getId()})}"
+                      th:object="${person}">
+                    <button type="submit">Set "OPERATOR" role</button>
+                </form>
             </div>
         </td>
     </tr>
 </table>
 
-<br/>
-<br/>
-<br/>
-
 <hr/>
-<div th:each="person : ${people}">
-    <a th:href="@{/people/{id}(id=${person.getId()})}"
-       th:text="${person.getName() + ', '}">user</a>
-</div>
+
 </body>
 </html>
