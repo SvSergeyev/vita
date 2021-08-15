@@ -36,12 +36,18 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createRoleIfNotFound("ROLE_OPERATOR");
         createRoleIfNotFound("ROLE_USER");
         Person admin = getAccount("Slava", "slava@ya.ru", encoder.encode("111111"), roleRepository.findByName("ROLE_ADMIN"));
+        Person admin2 = getAccount("Dima", "dima@ya.ru", encoder.encode("444444"), roleRepository.findByName("ROLE_ADMIN"));
         Person user = getAccount("Ivan", "ivan@ya.ru", encoder.encode("222222"), roleRepository.findByName("ROLE_USER"));
-        Person operator= getAccount("Oleg", "oleg@ya.ru", encoder.encode("333333"), roleRepository.findByName("ROLE_OPERATOR"));
+        Person user2 = getAccount("Sasha", "sasha@ya.ru", encoder.encode("555555"), roleRepository.findByName("ROLE_USER"));
+        Person operator = getAccount("Oleg", "oleg@ya.ru", encoder.encode("333333"), roleRepository.findByName("ROLE_OPERATOR"));
+        Person operator2 = getAccount("Vasya", "vasya@ya.ru", encoder.encode("666666"), roleRepository.findByName("ROLE_OPERATOR"));
         List<Person> accounts = new ArrayList<>();
         accounts.add(admin);
+        accounts.add(admin2);
         accounts.add(user);
+        accounts.add(user2);
         accounts.add(operator);
+        accounts.add(operator2);
         for (Person account : accounts) {
             if (personRepository.findByEmail(account.getEmail()) == null) {
                 personRepository.save(account);
@@ -66,6 +72,4 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         account.setRoles(Collections.singleton(role));
         return account;
     }
-
-
 }
