@@ -5,44 +5,60 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>Admin account</title>
+    <title>Personal account</title>
 </head>
 <body>
 <h3>Administrator's personal account</h3>
 <a sec:authentication="name">VALUE</a>
 <a> | </a>
-<a th:href="@{/logout}" th:method="post">Выход</a>
+<a th:href="@{/logout}" th:method="post">Logout</a>
 <hr />
 
+<h4>Users</h4>
 <table border="0">
     <tr>
-        <th>NAME</th>
-        <th>EMAIL</th>
+        <th>Name</th>
+        <th>Email</th>
     </tr>
     <tr>
         <td>
-            <div th:each="person:${people}">
-                <a th:text="${person.getName()}">VALUE</a>
+            <div th:each="user:${users}">
+                <a th:text="${user.getName()}">VALUE</a>
             </div>
         </td>
         <td>
-            <div th:each="person:${people}">
-                <a th:text="${person.getEmail()}">VALUE</a>
+            <div th:each="user:${users}">
+                <a th:text="${user.getEmail()}">VALUE</a>
             </div>
         </td>
         <td>
-            <div th:each="person:${people}">
+            <div th:each="user:${users}">
                 <form th:method="PATCH"
-                      th:action="@{/lk/admin/editUserRoles/{id}(id=${person.getId()})}"
-                      th:object="${person}">
+                      th:action="@{/lk/admin/editUserRoles/{id}(id=${user.getId()})}"
+                      th:object="${user}">
                     <button type="submit">Set "OPERATOR" role</button>
                 </form>
             </div>
         </td>
     </tr>
 </table>
-
 <hr/>
-
+<h4>Operators</h4>
+<table border="0">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+    </tr>
+    <div th:if="${!operators.isEmpty()}">
+        <div th:each="operator:${operators}">
+            <tr>
+                <td><a th:text="${operator.getName()}">VALUE</a></td>
+                <td><a th:text="${operator.getEmail()}">VALUE</a></td>
+                <td><a th:text="${operator.getRoles()}">VALUE</a></td>
+            </tr>
+        </div>
+    </div>
+</table>
 </body>
 </html>

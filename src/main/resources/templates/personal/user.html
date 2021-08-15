@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>Personal account</title>
 </head>
 <body>
-user page
+<h3>User's personal account</h3>
+<a sec:authentication="name">VALUE</a>
+<a> | </a>
+<a th:href="@{/logout}" th:method="post">Logout</a>
+<hr />
+<div th:if="${#httpServletRequest.getParameter('r') == 'success'}" style="color: green">
+    Request created successfully
+</div>
+<div th:if="${!requests.isEmpty()}">
+    <h4>Your requests</h4>
+    <table>
+        <tr>
+            <th>Number</th>
+            <th>Date</th>
+            <th>Message</th>
+            <th>Status</th>
+        </tr>
+        <div th:each="request:${requests}">
+            <tr>
+                <td th:text="${request.getId()}">VALUE</td>
+                <td th:text="${request.getTimeOfCreate()}">VALUE</td>
+                <td th:text="${request.getMessage()}">VALUE</td>
+                <td th:text="${request.getStatement()}">VALUE</td>
+                <td>
+<!--                    ПЕРЕДЕЛАТЬ!!!!!!!-->
+                    <form th:method="PATCH"
+                          th:action="@{/lk/admin/editUserRoles/{id}(id=${user.getId()})}"
+                          th:object="${user}">
+                        <button type="submit">Send a request</button>
+                    </form>
+<!--                    ДО СЮДА-->
+                </td>
+            </tr>
+        </div>
+    </table>
+    <hr>
+</div>
+
+<form th:method="GET"
+      th:action="@{/lk/user/{id}/requests(id=${person.getId()})}">
+    <button type="submit">Create new request</button>
+</form>
+
+<br/>
+<br/>
+<br/>
+Пользователь может:<br/>
+    создавать заявки<br/>
+    просматривать созданные им заявки<br/>
+    редактировать созданные им заявки в статусе «черновик»<br/>
+    отправлять заявки на рассмотрение оператору.<br/>
+Пользователь НЕ может:<br/>
+    редактировать отправленные на рассмотрение заявки<br/>
+    видеть заявки других пользователей<br/>
+    принимать заявки<br/>
+    отклонять заявки<br/>
+    назначать права<br/>
 </body>
 </html>
