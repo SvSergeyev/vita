@@ -11,22 +11,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 import tech.sergeyev.vitasoft.service.PersonService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/")
 public class MainController {
-    public static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
-    PersonService personService;
+    private final PersonService personService;
+    private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     public MainController(PersonService personService) {
         this.personService = personService;
     }
 
     @GetMapping()
-    public String index(Model model) {
-        LOGGER.info("\n\n\nin main controller\n\n");
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Person user = personService.getPersonByEmail(personService.loadUserByUsername(auth.getName()).getUsername());
-//        model.addAttribute("person", user);
-        return ("redirect:/lk");
+    public String index(HttpServletRequest request) {
+        Person person = personService.getPersonByEmail(request.getUserPrincipal().getName());
+        LOGGER.info("\n\n\nPERSON: " + person + "\n\n");
+        if (request.isUserInRole("ADMIN")) {
+            LOGGER.info("ROLE=ADMIN");
+            return "redirect:/admin/" + person.getId();
+        } else if (request.isUserInRole("OPERATOR")) {
+            LOGGER.info("ROLE=OPERATOR");
+            return "redirect:/operator/" + person.getId();
+        } else if (request.isUserInRole("USER")) {
+            LOGGER.info("ROLE=USER");
+            return "redirect:/user/" + person.getId();
+        }
+        return "redirect:/login?logout";
+//        return ("redirect:/lk");
     }
 }

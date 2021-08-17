@@ -15,36 +15,37 @@
 <hr />
 
 <h4>Users</h4>
-<table border="0">
+<table>
     <tr>
         <th>Name</th>
         <th>Email</th>
+        <th>Role</th>
     </tr>
-    <tr>
-        <td>
-            <div th:each="user:${users}">
+    <div th:each="user:${users}">
+        <tr>
+            <td>
                 <a th:text="${user.getName()}">VALUE</a>
-            </div>
-        </td>
-        <td>
-            <div th:each="user:${users}">
+            </td>
+            <td>
                 <a th:text="${user.getEmail()}">VALUE</a>
-            </div>
-        </td>
-        <td>
-            <div th:each="user:${users}">
+            </td>
+            <td>
+                <a th:text="${user.getRoles()[0].getName().replace('ROLE_','')}">VALUE</a>
+            </td>
+            <td>
+<!--                      th:action="@{/lk/admin/{id}/edit_roles/{u_id}(id=${admin.getId()}, u_id=${user.getId()})}"-->
                 <form th:method="PATCH"
-                      th:action="@{/lk/admin/editUserRoles/{id}(id=${user.getId()})}"
+                      th:action="@{/admin/{id}/edit_roles/{u_id}(id=${admin.getId()}, u_id=${user.getId()})}"
                       th:object="${user}">
                     <button type="submit">Set "OPERATOR" role</button>
                 </form>
-            </div>
-        </td>
-    </tr>
+            </td>
+        </tr>
+    </div>
 </table>
 <hr/>
 <h4>Operators</h4>
-<table border="0">
+<table>
     <tr>
         <th>Name</th>
         <th>Email</th>
@@ -55,7 +56,7 @@
             <tr>
                 <td><a th:text="${operator.getName()}">VALUE</a></td>
                 <td><a th:text="${operator.getEmail()}">VALUE</a></td>
-                <td><a th:text="${operator.getRoles()}">VALUE</a></td>
+                <td><a th:text="${operator.getRoles()[0].getName().replace('ROLE_', '')}">VALUE</a></td>
             </tr>
         </div>
     </div>

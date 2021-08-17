@@ -24,7 +24,8 @@
 <a> | </a>
 <a th:href="@{/logout}" th:method="post">Logout</a>
 <hr/>
-<form th:action="@{/lk/user/{id}/requests/{r_id}(id=${request.getAuthor().getId()}, r_id=${request.getId()})}"
+<form th:action="@{/requests/{r_id}/edit(r_id=${request.getId()})}"
+      th:object="${request}"
       th:method="PATCH">
     <label for="message">Message</label>
     <br/>

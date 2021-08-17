@@ -14,7 +14,7 @@ import tech.sergeyev.vitasoft.service.RequestService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("*/requests")
+@RequestMapping("/requests")
 public class RequestController {
     private final RequestService requestService;
     private final PersonService personService;
@@ -26,33 +26,33 @@ public class RequestController {
         this.personService = personService;
     }
 
-    @GetMapping({"/", "/new}"})
+    @GetMapping({"", "/new}"})
     public String index(Model model, HttpServletRequest httpRequest) {
         Person user = personService.getPersonByEmail(httpRequest.getUserPrincipal().getName());
         model.addAttribute("user", user);
-        if (!httpRequest.isUserInRole("ROLE_USER")) {
-            return "redirect:/requests?access_denied";
+        if (httpRequest.isUserInRole("ROLE_USER")) {
+            model.addAttribute("request", new Request());
+            return "request/create";
         }
-        model.addAttribute("request", new Request());
-        return "request/create";
+        return "redirect:/";
     }
 
     @PostMapping("/new")
     public String create(String message, HttpServletRequest httpRequest) {
         Person author = personService.getPersonByEmail(httpRequest.getUserPrincipal().getName());
         requestService.create(author, message);
-        return ("redirect:/lk/user/" + author.getId() + "?r=success");
+        return ("redirect:/user/" + author.getId() + "?r=success");
     }
 
-    @GetMapping("/{id}")
-    public String edit(@PathVariable int id, Model model) {
-        Request userRequest = requestService.getById(id);
+    @GetMapping("/{r_id}/edit")
+    public String view(@PathVariable("r_id") int id, Model model) {
+        Request userRequest = requestService.getRequestById(id);
         model.addAttribute("request", userRequest);
         return "request/edit";
     }
 
-    @PatchMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, String message) {
+    @PatchMapping("/{r_id}/edit")
+    public String view(@PathVariable("r_id") int id, String message) {
         requestService.updateText(id, message);
         return "redirect:/";
     }

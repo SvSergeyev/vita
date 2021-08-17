@@ -24,7 +24,7 @@
 <a> | </a>
 <a th:href="@{/logout}" th:method="post">Logout</a>
 <hr/>
-<form th:action="@{/lk/user/{id}/requests/new(id=${user.getId()})}" method="POST">
+<form th:action="@{/requests/new}" method="POST">
     <label for="message">Message</label>
     <br/>
     <textarea id="message" name="message" class="textField" placeholder="Text you message here..."></textarea>

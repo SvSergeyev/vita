@@ -35,7 +35,7 @@
                 <div th:if="${request.getStatement() == T(tech.sergeyev.vitasoft.persistence.model.requests.Statement).DRAFT}">
                     <td>
                         <form th:method="GET"
-                              th:action="@{/lk/user/{id}/requests/{r_id}/edit(id=${request.getAuthor().getId()},r_id=${request.getId()})}"
+                              th:action="@{/requests/{r_id}/edit(r_id=${request.getId()})}"
                               th:object="${request}">
                             <button type="submit">Edit</button>
                         </form>
@@ -55,7 +55,7 @@
 </div>
 
 <form th:method="GET"
-      th:action="@{/lk/user/{id}/requests(id=${person.getId()})}">
+      th:action="@{/requests(id=${person.getId()})}">
     <button type="submit">Create new request</button>
 </form>
 </body>

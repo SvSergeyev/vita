@@ -14,6 +14,6 @@ CREATE TABLE IF NOT EXISTS person
 
 CREATE TABLE IF NOT EXISTS people_roles
 (
-    employee_id SERIAL ,
-    roles_id SERIAL
+    person_id SERIAL ,
+    role_id SERIAL
 );

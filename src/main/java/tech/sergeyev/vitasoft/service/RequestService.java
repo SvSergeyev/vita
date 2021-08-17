@@ -15,14 +15,10 @@ import java.util.List;
 @Service
 @Transactional
 public class RequestService {
-    private final PersonService personService;
     private final RequestRepository requestRepository;
     private final static Logger LOGGER = LoggerFactory.getLogger(RequestService.class);
 
-
-    public RequestService(PersonService personService,
-                          RequestRepository requestRepository) {
-        this.personService = personService;
+    public RequestService(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
     }
 
@@ -35,19 +31,23 @@ public class RequestService {
         requestRepository.save(request);
     }
 
-    public Request getById(int request_id) {
+    public Request getRequestById(int request_id) {
         return requestRepository.findById(request_id);
     }
 
     public void updateText(int id, String message) {
-        getById(id).setMessage(message);
+        getRequestById(id).setMessage(message);
     }
 
     public void updateStatus(int id, Statement statement) {
-        getById(id).setStatement(statement);
+        getRequestById(id).setStatement(statement);
     }
 
     public List<Request> getAllByStatus(Statement statement) {
         return requestRepository.findAllByStatement(statement);
+    }
+
+    public List<Request> getAllByAuthor(Person author) {
+        return requestRepository.findAllByAuthor(author);
     }
 }
