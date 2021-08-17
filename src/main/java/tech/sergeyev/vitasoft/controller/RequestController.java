@@ -14,7 +14,7 @@ import tech.sergeyev.vitasoft.service.RequestService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("**/requests")
+@RequestMapping("*/requests")
 public class RequestController {
     private final RequestService requestService;
     private final PersonService personService;
@@ -51,15 +51,27 @@ public class RequestController {
         return "request/edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, String message) {
+        requestService.updateText(id, message);
+        return "redirect:/";
+    }
+
+    @PatchMapping("/{id}/submit")
     public String send(@PathVariable("id") int id) {
         requestService.updateStatus(id, Statement.SUBMITTED);
         return "redirect:/";
     }
 
-    @PatchMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, String message) {
-        requestService.updateText(id, message);
+    @PatchMapping("/{id}/accept")
+    public String accept(@PathVariable("id") int id) {
+        requestService.updateStatus(id, Statement.ACCEPTED);
+        return "redirect:/";
+    }
+
+    @PatchMapping("/{id}/reject")
+    public String reject(@PathVariable("id") int id) {
+        requestService.updateStatus(id, Statement.REJECTED);
         return "redirect:/";
     }
 }

@@ -21,7 +21,7 @@
     <h4>Your draft requests</h4>
     <table>
         <tr>
-            <th>Number</th>
+            <th>ID</th>
             <th>Date</th>
             <th>Message</th>
             <th>Status</th>
@@ -42,9 +42,9 @@
                     </td>
                     <td>
                         <form th:method="PATCH"
-                              th:action="@{/requests/{r_id}(r_id=${request.getId()})}"
+                              th:action="@{/requests/{r_id}/submit(r_id=${request.getId()})}"
                               th:object="${request}">
-                            <button type="submit">Send</button>
+                            <button type="submit">Submit</button>
                         </form>
                     </td>
                 </div>

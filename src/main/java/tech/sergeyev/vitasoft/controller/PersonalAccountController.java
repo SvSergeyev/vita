@@ -37,9 +37,7 @@ public class PersonalAccountController {
 
     @GetMapping()
     public String identifyAndRedirect(HttpServletRequest request) {
-        LOGGER.info("\n\n\nin identifyAndRedirect method\n\n");
         Person person = personService.getPersonByEmail(request.getUserPrincipal().getName());
-        LOGGER.info("\n\n\nPERSON: " + person + "\n\n");
         if (request.isUserInRole("ADMIN")) {
             return "redirect:lk/admin/" + person.getId();
         } else if (request.isUserInRole("OPERATOR")) {
@@ -48,11 +46,10 @@ public class PersonalAccountController {
             LOGGER.info("REDIRECT TO USER PAGE");
             return "redirect:lk/user/" + person.getId();
         }
-
         return "redirect:/login?logout";
     }
 
-    @GetMapping({"/user/{id}", "/admin/{id}", "/operator/{id}"})
+    @GetMapping({"/user/{id}", "/admin/{id}", /*"/operator/{id}"*/})
     public String show(@PathVariable("id") int id, Model model, HttpServletRequest request) {
         model.addAttribute("person", personService.getPersonById(id));
         if (request.isUserInRole("ROLE_ADMIN")) {
@@ -60,9 +57,9 @@ public class PersonalAccountController {
             model.addAttribute("operators", personService.getAllPeopleByRole("ROLE_OPERATOR"));
             return "personal/admin";
         }
-        else if (request.isUserInRole("ROLE_OPERATOR")) {
-            return "personal/operator";
-        }
+//        else if (request.isUserInRole("ROLE_OPERATOR")) {
+//            return "personal/operator";
+//        }
         else if (request.isUserInRole("ROLE_USER")) {
             model.addAttribute("requests", requestRepository.findAllByAuthor((Person) model.getAttribute("person")));
             LOGGER.info("\n\n\nREQUESTS: " + model.getAttribute("requests") + "\n\n");
