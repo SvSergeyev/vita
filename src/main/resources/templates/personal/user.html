@@ -13,11 +13,12 @@
 <a> | </a>
 <a th:href="@{/logout}" th:method="post">Logout</a>
 <hr />
-<div th:if="${#httpServletRequest.getParameter('r') == 'success'}" style="color: green">
-    Request created successfully
+<div th:if="${#httpServletRequest.getParameter('r') == 'success'}"
+     style="color: green">
+    <p>Request created successfully</p>
 </div>
 <div th:if="${!requests.isEmpty()}">
-    <h4>Your requests</h4>
+    <h4>Your draft requests</h4>
     <table>
         <tr>
             <th>Number</th>
@@ -28,18 +29,25 @@
         <div th:each="request:${requests}">
             <tr>
                 <td th:text="${request.getId()}">VALUE</td>
-                <td th:text="${request.getTimeOfCreate()}">VALUE</td>
+                <td th:text="${#temporals.format(request.getTimeOfCreate(), 'dd MMM yyyy HH:mm')}">VALUE</td>
                 <td th:text="${request.getMessage()}">VALUE</td>
                 <td th:text="${request.getStatement()}">VALUE</td>
-                <td>
-<!--                    ПЕРЕДЕЛАТЬ!!!!!!!-->
-                    <form th:method="PATCH"
-                          th:action="@{/lk/admin/editUserRoles/{id}(id=${user.getId()})}"
-                          th:object="${user}">
-                        <button type="submit">Send a request</button>
-                    </form>
-<!--                    ДО СЮДА-->
-                </td>
+                <div th:if="${request.getStatement() == T(tech.sergeyev.vitasoft.persistence.model.requests.Statement).DRAFT}">
+                    <td>
+                        <form th:method="GET"
+                              th:action="@{/lk/user/{id}/requests/{r_id}/edit(id=${request.getAuthor().getId()},r_id=${request.getId()})}"
+                              th:object="${request}">
+                            <button type="submit">Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:method="PATCH"
+                              th:action="@{/requests/{r_id}(r_id=${request.getId()})}"
+                              th:object="${request}">
+                            <button type="submit">Send</button>
+                        </form>
+                    </td>
+                </div>
             </tr>
         </div>
     </table>
@@ -50,20 +58,5 @@
       th:action="@{/lk/user/{id}/requests(id=${person.getId()})}">
     <button type="submit">Create new request</button>
 </form>
-
-<br/>
-<br/>
-<br/>
-Пользователь может:<br/>
-    создавать заявки<br/>
-    просматривать созданные им заявки<br/>
-    редактировать созданные им заявки в статусе «черновик»<br/>
-    отправлять заявки на рассмотрение оператору.<br/>
-Пользователь НЕ может:<br/>
-    редактировать отправленные на рассмотрение заявки<br/>
-    видеть заявки других пользователей<br/>
-    принимать заявки<br/>
-    отклонять заявки<br/>
-    назначать права<br/>
 </body>
 </html>

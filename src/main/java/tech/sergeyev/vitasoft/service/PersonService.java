@@ -35,9 +35,7 @@ public class PersonService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person user = personRepository.findByEmail(username);
-//        LOGGER.info("Find this username: " + username);
         if (user != null) {
-//            LOGGER.info("Find this user: " + user);
             return new User(
                     user.getEmail(),
                     user.getPassword(),
@@ -68,17 +66,13 @@ public class PersonService implements UserDetailsService {
     }
 
     public List<Person> getAllPeopleByRole(String name) {
-        List<Person> list = personRepository.findAllByRoles(name);
-        LOGGER.info("\n\n\nROLES: (name=" + name + ") : " + list);
         return personRepository.findAllByRoles(name);
     }
 
     public void update(int id, Person person) {
         Person toBeUpdated = personRepository.findById(id);
         toBeUpdated.getRoles().clear();
-        LOGGER.info("Roles of toBeUpdated person: " + toBeUpdated.getRoles());
         toBeUpdated.setRoles(person.getRoles());
-        LOGGER.info("Roles of toBeUpdated person: " + toBeUpdated.getRoles());
     }
 
 }

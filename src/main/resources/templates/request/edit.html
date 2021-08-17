@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit request</title>
+
+    <style type="text/css">
+        .textField {
+            width: 300px;
+            height: 100px;
+            padding: 0 10px;
+            font-size: 15px;
+            alignment: left;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h3> Edit request #[[${request.getId()}]] </h3>
+<a sec:authentication="name">VALUE</a>
+<a> | </a>
+<a th:href="@{/logout}" th:method="post">Logout</a>
+<hr/>
+<form th:action="@{/lk/user/{id}/requests/{r_id}(id=${request.getAuthor().getId()}, r_id=${request.getId()})}"
+      th:method="PATCH">
+    <label for="message">Message</label>
+    <br/>
+    <textarea id="message" name="message" class="textField" th:text="${request.getMessage()}"></textarea>
+    <br/>
+    <br/>
+    <button type="submit">Save</button>
+    <button type="reset">Cancel</button>
+</form>
+</body>
+</html>

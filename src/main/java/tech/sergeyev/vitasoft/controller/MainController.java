@@ -23,9 +23,10 @@ public class MainController {
 
     @GetMapping()
     public String index(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person user = personService.getPersonByEmail(personService.loadUserByUsername(auth.getName()).getUsername());
-        model.addAttribute("person", user);
+        LOGGER.info("\n\n\nin main controller\n\n");
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Person user = personService.getPersonByEmail(personService.loadUserByUsername(auth.getName()).getUsername());
+//        model.addAttribute("person", user);
         return ("redirect:/lk");
     }
 }

@@ -24,4 +24,15 @@ public class Request {
     LocalDateTime timeOfCreate;
     @ManyToOne(cascade=CascadeType.ALL)
     Person author;
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "id=" + id +
+                ", statement=" + statement +
+                ", message='" + message + '\'' +
+                ", timeOfCreate=" + timeOfCreate +
+                ", author=" + author +
+                '}';
+    }
 }
