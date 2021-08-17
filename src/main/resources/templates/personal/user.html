@@ -29,7 +29,7 @@
         <div th:each="request:${requests}">
             <tr>
                 <td th:text="${request.getId()}">VALUE</td>
-                <td th:text="${#temporals.format(request.getTimeOfCreate(), 'dd MMM yyyy HH:mm')}">VALUE</td>
+                <td th:text="${#temporals.format(request.getTimeOfCreate(), 'dd MMM yyyy, HH:mm')}">VALUE</td>
                 <td th:text="${request.getMessage()}">VALUE</td>
                 <td th:text="${request.getStatement()}">VALUE</td>
                 <div th:if="${request.getStatement() == T(tech.sergeyev.vitasoft.persistence.model.requests.Statement).DRAFT}">
