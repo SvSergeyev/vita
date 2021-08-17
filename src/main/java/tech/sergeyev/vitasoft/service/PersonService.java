@@ -2,8 +2,6 @@ package tech.sergeyev.vitasoft.service;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -24,9 +22,7 @@ import java.util.List;
 @Transactional
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PersonService implements UserDetailsService {
-
     final PersonRepository personRepository;
-    static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
 
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;

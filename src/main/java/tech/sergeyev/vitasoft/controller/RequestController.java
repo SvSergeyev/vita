@@ -1,7 +1,5 @@
 package tech.sergeyev.vitasoft.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 public class RequestController {
     private final RequestService requestService;
     private final PersonService personService;
-    private final static Logger LOGGER = LoggerFactory.getLogger(RequestController.class);
 
     public RequestController(RequestService requestService,
                              PersonService personService) {

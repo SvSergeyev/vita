@@ -12,7 +12,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -44,19 +43,6 @@ public class Person {
 
     @OneToMany(mappedBy = "author")
     List<Request> requests;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Person person = (Person) o;
-//        return email.equals(person.email);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(email);
-//    }
 
     @Override
     public String toString() {

@@ -1,7 +1,5 @@
 package tech.sergeyev.vitasoft.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.sergeyev.vitasoft.persistence.dao.RequestRepository;
@@ -16,7 +14,6 @@ import java.util.List;
 @Transactional
 public class RequestService {
     private final RequestRepository requestRepository;
-    private final static Logger LOGGER = LoggerFactory.getLogger(RequestService.class);
 
     public RequestService(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
