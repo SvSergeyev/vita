@@ -1,4 +1,4 @@
-package tech.sergeyev.vitasoft.controller;
+package tech.sergeyev.vitasoft.controller.deprecated;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,26 +6,25 @@ import org.springframework.web.bind.annotation.*;
 import tech.sergeyev.vitasoft.persistence.model.requests.Request;
 import tech.sergeyev.vitasoft.persistence.model.requests.Statement;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
-import tech.sergeyev.vitasoft.service.PersonService;
 import tech.sergeyev.vitasoft.service.RequestService;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/requests")
+@RequestMapping("/old-requests")
 public class RequestController {
     private final RequestService requestService;
-    private final PersonService personService;
+    private final PersonService personServiceImpl;
 
     public RequestController(RequestService requestService,
-                             PersonService personService) {
+                             PersonService personServiceImpl) {
         this.requestService = requestService;
-        this.personService = personService;
+        this.personServiceImpl = personServiceImpl;
     }
 
     @GetMapping({"", "/new}"})
     public String index(Model model, HttpServletRequest httpRequest) {
-        Person user = personService.getPersonByEmail(httpRequest.getUserPrincipal().getName());
+        Person user = personServiceImpl.getPersonByEmail(httpRequest.getUserPrincipal().getName());
         model.addAttribute("user", user);
         if (httpRequest.isUserInRole("ROLE_USER")) {
             model.addAttribute("request", new Request());
@@ -36,7 +35,7 @@ public class RequestController {
 
     @PostMapping("/new")
     public String create(String message, HttpServletRequest httpRequest) {
-        Person author = personService.getPersonByEmail(httpRequest.getUserPrincipal().getName());
+        Person author = personServiceImpl.getPersonByEmail(httpRequest.getUserPrincipal().getName());
         requestService.create(author, message);
         return ("redirect:/user/" + author.getId() + "?r=success");
     }

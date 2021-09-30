@@ -1,10 +1,12 @@
 package tech.sergeyev.vitasoft.persistence.model.requests;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 
 import javax.persistence.*;
@@ -21,7 +23,11 @@ public class Request {
     Integer id;
     Statement statement;
     String message;
+
+    @CreatedDate
     LocalDateTime timeOfCreate;
+
+    @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
     Person author;
 

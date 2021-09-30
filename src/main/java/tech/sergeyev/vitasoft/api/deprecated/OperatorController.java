@@ -1,4 +1,4 @@
-package tech.sergeyev.vitasoft.controller;
+package tech.sergeyev.vitasoft.controller.deprecated;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import tech.sergeyev.vitasoft.persistence.model.requests.Request;
 import tech.sergeyev.vitasoft.persistence.model.requests.Statement;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
-import tech.sergeyev.vitasoft.service.PersonService;
 import tech.sergeyev.vitasoft.service.RequestService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +17,12 @@ import java.util.List;
 @RequestMapping("/operator")
 public class OperatorController {
     private final RequestService requestService;
-    private final PersonService personService;
+    private final PersonService personServiceImpl;
 
     public OperatorController(RequestService requestService,
-                              PersonService personService) {
+                              PersonService personServiceImpl) {
         this.requestService = requestService;
-        this.personService = personService;
+        this.personServiceImpl = personServiceImpl;
     }
 
     @GetMapping()
@@ -33,7 +32,7 @@ public class OperatorController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, HttpServletRequest httpRequest) {
-        Person requestingUser = personService.getPersonByEmail(httpRequest.getUserPrincipal().getName());
+        Person requestingUser = personServiceImpl.getPersonByEmail(httpRequest.getUserPrincipal().getName());
         if (id != requestingUser.getId() || !httpRequest.isUserInRole("ROLE_OPERATOR")) {
             return "redirect:/";
         }

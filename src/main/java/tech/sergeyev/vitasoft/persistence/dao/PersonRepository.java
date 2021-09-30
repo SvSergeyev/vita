@@ -7,15 +7,18 @@ import org.springframework.stereotype.Repository;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer> {
-    @Query("SELECT p FROM Person p WHERE p.email = :email")
-    Person findByEmail(@Param("email") String email);
+//    @Query("SELECT p FROM Person p WHERE p.email = :email")
+    Optional<Person> findByEmail(/*@Param("email") */String email);
 
-    @Query("SELECT p FROM Person p WHERE p.id = :id")
-    Person findById(@Param("id") int id);
+    Boolean existsByEmail(String email);
 
-    @Query("SELECT p FROM Person p INNER JOIN p.roles r WHERE r.name = :name")
+//    @Query("SELECT p FROM Person p WHERE p.id = :id")
+    Person findById(/*@Param("id") */int id);
+
+//    @Query("SELECT p FROM Person p INNER JOIN p.roles r WHERE r.name = :name")
     List<Person> findAllByRoles(@Param("name") String name);
 }

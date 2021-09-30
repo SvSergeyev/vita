@@ -40,6 +40,16 @@ public class RequestService {
         getRequestById(id).setStatement(statement);
     }
 
+    public boolean update(int id, Request request) {
+        Request toBeUpdated = requestRepository.findById(id);
+        if (toBeUpdated != null) {
+            toBeUpdated.setMessage(request.getMessage());
+            toBeUpdated.setStatement(request.getStatement());
+            return true;
+        }
+        return false;
+    }
+
     public List<Request> getAllByStatus(Statement statement) {
         return requestRepository.findAllByStatement(statement);
     }
