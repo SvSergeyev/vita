@@ -1,16 +1,19 @@
-package tech.sergeyev.vitasoft.service;
+package tech.sergeyev.vitasoft.security.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tech.sergeyev.vitasoft.persistence.dao.PersonRepository;
+import tech.sergeyev.vitasoft.persistence.repository.PersonRepository;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final PersonRepository personRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     public UserDetailsServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -22,6 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Person person = personRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "User " + username + " not found"));
+        LOGGER.info("Found: " + person);
         return UserDetailsImpl.build(person);
     }
 }

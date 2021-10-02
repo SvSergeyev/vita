@@ -26,40 +26,40 @@ public class SpringConfig implements WebMvcConfigurer {
         this.applicationContext = applicationContext;
     }
 
-    @Bean
-    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-        return new HiddenHttpMethodFilter();
-    }
+//    @Bean
+//    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+//        return new HiddenHttpMethodFilter();
+//    }
 
-    @Bean
-    public SpringResourceTemplateResolver springResourceTemplateResolver() {
-        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("classpath:/templates/");
-        templateResolver.setSuffix(".html");
-        return templateResolver;
-    }
+//    @Bean
+//    public SpringResourceTemplateResolver springResourceTemplateResolver() {
+//        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+//        templateResolver.setApplicationContext(applicationContext);
+//        templateResolver.setPrefix("classpath:/templates/");
+//        templateResolver.setSuffix(".html");
+//        return templateResolver;
+//    }
+//
+//    @Bean
+//    public SpringTemplateEngine springTemplateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(springResourceTemplateResolver());
+//        templateEngine.setEnableSpringELCompiler(true);
+//        templateEngine.addDialect(new SpringSecurityDialect());
+//        templateEngine.addDialect(new Java8TimeDialect());
+//        return templateEngine;
+//    }
+//
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+//        thymeleafViewResolver.setTemplateEngine(springTemplateEngine());
+//        registry.viewResolver(thymeleafViewResolver);
+//    }
 
-    @Bean
-    public SpringTemplateEngine springTemplateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(springResourceTemplateResolver());
-        templateEngine.setEnableSpringELCompiler(true);
-        templateEngine.addDialect(new SpringSecurityDialect());
-        templateEngine.addDialect(new Java8TimeDialect());
-        return templateEngine;
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
-        thymeleafViewResolver.setTemplateEngine(springTemplateEngine());
-        registry.viewResolver(thymeleafViewResolver);
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("auth/login");
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/login").setViewName("auth/login");
+//        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//    }
 }

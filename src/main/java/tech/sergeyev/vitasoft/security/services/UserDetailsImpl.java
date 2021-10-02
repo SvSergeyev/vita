@@ -1,4 +1,4 @@
-package tech.sergeyev.vitasoft.service;
+package tech.sergeyev.vitasoft.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;

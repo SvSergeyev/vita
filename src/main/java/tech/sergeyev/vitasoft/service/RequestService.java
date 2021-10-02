@@ -2,7 +2,7 @@ package tech.sergeyev.vitasoft.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tech.sergeyev.vitasoft.persistence.dao.RequestRepository;
+import tech.sergeyev.vitasoft.persistence.repository.RequestRepository;
 import tech.sergeyev.vitasoft.persistence.model.requests.Request;
 import tech.sergeyev.vitasoft.persistence.model.requests.Statement;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;

@@ -1,4 +1,4 @@
-package tech.sergeyev.vitasoft.persistence.dao;
+package tech.sergeyev.vitasoft.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

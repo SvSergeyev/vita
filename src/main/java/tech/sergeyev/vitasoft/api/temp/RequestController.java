@@ -1,4 +1,4 @@
-package tech.sergeyev.vitasoft.api;
+package tech.sergeyev.vitasoft.api.temp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/requests")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class RequestRestController extends RoleValidator {
+public class RequestController extends RoleValidator {
     private final RequestService requestService;
-    public static final Logger LOGGER = LoggerFactory.getLogger(RequestRestController.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(RequestController.class);
 
-    public RequestRestController(RequestService requestService,
-                                 PersonService personService) {
+    public RequestController(RequestService requestService,
+                             PersonService personService) {
         super(personService);
         this.requestService = requestService;
     }
