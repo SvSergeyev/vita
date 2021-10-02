@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tech.sergeyev.vitasoft.security.jwt.AuthEntryPointJwt;
 import tech.sergeyev.vitasoft.security.jwt.AuthenticationJwtTokenFilter;
-import tech.sergeyev.vitasoft.service.UserDetailsServiceImpl;
+import tech.sergeyev.vitasoft.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -52,36 +52,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().and().csrf().disable()
-                .exceptionHandling()
-                    .authenticationEntryPoint(unauthorizedHandler)
-                .and()
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                    .antMatchers("/vita/auth").permitAll()
-                .antMatchers("/vita").permitAll()
-                .anyRequest()
-                    .authenticated();
-//                .and()
-//                .formLogin()
-//                    .loginPage("/login")
-//                    .permitAll()
-//                    .defaultSuccessUrl("/")
-//                    .failureUrl("/login?error")
-//                .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-//                    .logoutSuccessUrl("/login?logout")
-//                    .deleteCookies("JSESSIONID")
-//                    .permitAll()
-//                .and()
-//                    .httpBasic()
-//                .and()
-//                    .oauth2ResourceServer()
-//                        .jwt();
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests().antMatchers("/auth/**").permitAll()
+                .antMatchers("/").permitAll()
+                .anyRequest().authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
     }
