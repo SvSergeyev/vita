@@ -1,9 +1,12 @@
 package tech.sergeyev.vitasoft.service;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import tech.sergeyev.vitasoft.persistence.dao.PersonRepository;
+import tech.sergeyev.vitasoft.persistence.model.users.RoleNames;
+import tech.sergeyev.vitasoft.persistence.repository.PersonRepository;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonServiceImpl.class);
 
     @Override
     public boolean update(int id, Person person) {
@@ -42,7 +46,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> getAllPeopleByRole(String name) {
-        return personRepository.findAllByRoles(name);
+//        LOGGER.info("Запрашиваю пользователей для роли: " + name);
+        return personRepository.findAllByRoles(RoleNames.valueOf(name));
     }
 
     @Override
