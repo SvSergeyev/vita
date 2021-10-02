@@ -1,24 +1,33 @@
 package tech.sergeyev.vitasoft.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.sergeyev.vitasoft.payload.response.UsersAndOperatorsListResponse;
 import tech.sergeyev.vitasoft.persistence.model.users.Person;
-import tech.sergeyev.vitasoft.service.PersonService;
 import tech.sergeyev.vitasoft.service.PersonServiceImpl;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping("/admins")
 @CrossOrigin(origins = "http://localhost:4200")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
-    // TODO: Работа над контроллером админа
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+
+    // что делает админ:
+    // + просматривает список всех пользователей
+    // + возвращает в ответе два списка:
+    //   операторы;
+    //   пользователи.
+    // * может назначать пользователя оператором,
+    //   а оператора - пользователем
 
     private final PersonServiceImpl personService;
 
@@ -27,60 +36,10 @@ public class AdminController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Person>> show(HttpServletRequest request) {
-        String username = request.getUserPrincipal().getName();
-        if (!validateRole(username, "ROLE_ADMIN")) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
+    public ResponseEntity<?> show() {
         List<Person> users = personService.getAllPeopleByRole("ROLE_USER");
-        return users != null
-                ? new ResponseEntity<>(users, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Person> operators = personService.getAllPeopleByRole("ROLE_OPERATOR");
+        return ResponseEntity.ok(
+                new UsersAndOperatorsListResponse(users, operators));
     }
-
-//    @GetMapping("/asasa")
-//    public ResponseEntity<List<Person>> showDaNeShow(HttpServletRequest request) {
-//        Person admin = personService.getPersonByEmail(request.getUserPrincipal().getName());
-//        if (!validateRole(admin.getEmail(), "ROLE_ADMIN")) {
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//        List<Person> users = personService.getAllPeopleByRole("ROLE_USER");
-//        return users != null
-//                ? new ResponseEntity<>(users, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
-//    @PutMapping("/management/{userId}")
-//    public ResponseEntity<?> editRole(@PathVariable(name = "userId") int userId) {
-//        if (!validateRole(adminId)) {
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//        System.out.println("\n\n\nREQUEST_BODY: " + person + "\n\n\n");
-//        final boolean updated = personService.update(userId, person);
-//        return updated
-//                ? new ResponseEntity<>(HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-//    }
-    /*
-    --------------
-    final boolean updated = personService.update(id, person);
-        return updated
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-    --------------
-    @PatchMapping("/{id}/edit_roles/{u_id}")
-    public String changeRole(@PathVariable("u_id") int u_id,
-                             @PathVariable("id") int id) {
-        Person modifyingUser = new Person();
-        modifyingUser.setRoles(Collections.singleton(roleService.getRoleByName("ROLE_OPERATOR")));
-        personServiceImpl.voidUpdate(u_id, modifyingUser);
-        return "redirect:/";
-    }
-     */
-//    @Override
-//    public boolean validateRole(String username, String role) {
-//        Person person = personService.getPersonById(id);
-//        return person.getRoles().contains(new Role("ROLE_ADMIN"));
-//    }
 }
