@@ -11,9 +11,7 @@ import tech.sergeyev.vitasoft.persistence.model.requests.Request;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,6 +58,14 @@ public class Person {
 
     @OneToMany(mappedBy = "author")
     List<Request> requests;
+
+    public Person(@NotBlank(message = "Поле не может быть пустым") @Size(min = 2, max = 20) String name,
+                  @Email @NotBlank @Size(max = 50) String email,
+                  @NotBlank @Size(max = 120) String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public String toString() {
