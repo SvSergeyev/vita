@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.unauthorizedHandler = unauthorizedHandler;
     }
 
-
     @Bean
     public AuthenticationJwtTokenFilter authenticationJwtTokenFilter() {
         return new AuthenticationJwtTokenFilter();
