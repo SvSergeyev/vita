@@ -18,4 +18,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     @Query("SELECT p FROM Person p INNER JOIN p.roles r WHERE r.name = :name")
     List<Person> findAllByRoles(@Param("name") RoleNames name);
+
+    Boolean existsByEmail(String email);
 }
