@@ -1,4 +1,4 @@
-package tech.sergeyev.vita.api.auth;
+package tech.sergeyev.vita.api;
 
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -48,17 +48,12 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()));
-        LOGGER.info("AUTHENTICATION: " + authentication.getPrincipal() + ", " + authentication.getCredentials());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities()
                 .stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        JwtResponse response = new JwtResponse(jwt, userDetails.getId(), userDetails.getEmail(), roles);
-        JwtResponse responseWithUsername = new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles);
-        LOGGER.info("RESPONSE FROM ANSWER (email): " + response);
-        LOGGER.info("RESPONSE FROM ANSWER (username): " + responseWithUsername);
         return ResponseEntity.ok(
                 new JwtResponse(jwt,
                         userDetails.getId(),
