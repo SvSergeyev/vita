@@ -16,7 +16,7 @@ import tech.sergeyev.vita.service.RequestService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin/*(origins = "http://localhost:4200")*/
 @RequestMapping("/users")
 public class UserController {
     /*

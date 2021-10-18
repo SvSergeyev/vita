@@ -12,6 +12,8 @@ import tech.sergeyev.vita.payload.response.UsersAndOperatorsListResponse;
 import tech.sergeyev.vita.persistence.model.users.Person;
 import tech.sergeyev.vita.service.PersonServiceImpl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -39,7 +41,21 @@ public class AdminController {
     public ResponseEntity<?> show() {
         List<Person> users = personService.getAllPeopleByRole("ROLE_USER");
         List<Person> operators = personService.getAllPeopleByRole("ROLE_OPERATOR");
-        return ResponseEntity.ok(
-                new UsersAndOperatorsListResponse(users, operators));
+        UsersAndOperatorsListResponse response = new UsersAndOperatorsListResponse(users, operators);
+//        LOGGER.info("Response: " + response);
+//        List<List<Person>> responseList = new ArrayList<>();
+//        responseList.add(users);
+//        responseList.add(operators);
+//        List<List<String>> str = new ArrayList<>();
+//        List<String> sub1 = new ArrayList<>();
+//        List<String> sub2 = new ArrayList<>();
+//        sub1.add("a");
+//        sub1.add("b");
+//        sub2.add("c");
+//        sub2.add("d");
+//        str.add(sub1);
+//        str.add(sub2);
+        LOGGER.info("Response: " + response);
+        return ResponseEntity.ok(response);
     }
 }

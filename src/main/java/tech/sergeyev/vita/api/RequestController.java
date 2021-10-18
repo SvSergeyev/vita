@@ -22,7 +22,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/requests")
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@CrossOrigin
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RequestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(RequestController.class);
 
@@ -51,6 +52,7 @@ public class RequestController {
                 response.setUsersRequests(usersRequests);
             }
         }
+
         if (user.getRoles().contains(new Role(RoleNames.ROLE_OPERATOR))) {
             submittedRequests = requestService.getAllByStatus(Statement.SUBMITTED);
             if (submittedRequests != null) {
