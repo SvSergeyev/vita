@@ -16,23 +16,9 @@ import tech.sergeyev.vita.service.RequestService;
 import java.util.List;
 
 @RestController
-@CrossOrigin/*(origins = "http://localhost:4200")*/
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/users")
 public class UserController {
-    /*
-Пользователь может
-•	создавать заявки
-+•	просматривать созданные им заявки
-•	редактировать созданные им заявки в статусе «черновик»
-•	отправлять заявки на рассмотрение оператору.
-Пользователь НЕ может:
-•	редактировать отправленные на рассмотрение заявки
-•	видеть заявки других пользователей
-•	принимать заявки
-•	отклонять заявки
-•	назначать права
-•	смотреть список пользователей
- */
 
     private final RequestService requestService;
     private final PersonService personService;
@@ -59,15 +45,4 @@ public class UserController {
                 ? new ResponseEntity<>(requests, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PutMapping("/{id}/set-operator")
-//    public ResponseEntity<?> changeRole(@PathVariable(name = "id") int id,
-//                                        HttpServletRequest request) {
-//        Person person = personService.getPersonById(id);
-//        person.setRoles(Collections.singletonList(new Role("ROLE_OPERATOR")));
-//        final boolean updated = personService.update(id, person);
-//        return updated
-//                ? new ResponseEntity<>(HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-//    }
 }

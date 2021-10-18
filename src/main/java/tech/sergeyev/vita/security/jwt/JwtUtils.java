@@ -32,9 +32,6 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String token) {
         try {
-
-            LOGGER.info("Token for validate: " + token);
-
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (SignatureException e) {

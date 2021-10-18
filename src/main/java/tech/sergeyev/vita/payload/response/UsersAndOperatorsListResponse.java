@@ -16,12 +16,4 @@ import java.util.List;
 public class UsersAndOperatorsListResponse {
     List<Person> users;
     List<Person> operators;
-
-    @Override
-    public String toString() {
-        return "UsersAndOperatorsListResponse{" +
-                "users=" + users +
-                ", operators=" + operators +
-                '}';
-    }
 }

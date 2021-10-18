@@ -22,9 +22,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/requests")
-@CrossOrigin
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@CrossOrigin(origins = "http://localhost:4200")
 public class RequestController {
+
     public static final Logger LOGGER = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
@@ -83,7 +83,9 @@ public class RequestController {
     //TODO: показ конкретной заявки по id
     @GetMapping("/{requestId}")
     public ResponseEntity<?> read(@PathVariable(name = "requestId") int id) {
-        /*Request request = requestService.getRequestById(id);
+        /*
+        так было в таймлифе и сейчас, в общем-то, ничего +/- не изменится
+        Request request = requestService.getRequestById(id);
         return request != null
                 ? new ResponseEntity<>(request, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
@@ -95,7 +97,8 @@ public class RequestController {
     @PutMapping("/{requestId}")
     public ResponseEntity<?> update(@PathVariable(name = "requestId") int id,
                                     @RequestBody Request request) {
-        /*boolean updated = requestService.update(id, request);
+        /*
+        boolean updated = requestService.update(id, request);
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);*/
