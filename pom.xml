@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tech.sergeyev</groupId>
-    <artifactId>vitasoft-test-task</artifactId>
+    <artifactId>vita</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Vitasoft Test Task</name>
-    <description>Test task for the java junior position of Vitasoft</description>
+    <name>Vita</name>
+    <description>Simple web service for practicing REST service development skills</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -77,12 +77,12 @@
             <version>0.9.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-java8time -->
+        <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-java8time
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-java8time</artifactId>
             <version>3.0.2.RELEASE</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
